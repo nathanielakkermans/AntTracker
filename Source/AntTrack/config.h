@@ -26,11 +26,11 @@ v2.19.8  2022-03-09 Merge Bohan's code for box compass alignment.
 //=============================================================================================
 //=====================   S E L E C T   E S P   B O A R D   V A R I A N T   ===================
 //=============================================================================================
-//#define ESP32_Variant     1    //  ESP32 Dev Module - there are several sub-variants that work
+#define ESP32_Variant     1    //  ESP32 Dev Module - there are several sub-variants that work
 //#define ESP32_Variant     4    //  Heltec Wifi Kit 32 
 //#define ESP32_Variant     5    //  LILYGO® TTGO T-Display ESP32 1.14" ST7789 Colour LCD
 //#define ESP32_Variant     6    // LILYGO® TTGO T2 ESP32 OLED Arduino IDE board = "ESP32 Dev Module"
-#define ESP32_Variant     7    // ESP32 Dev Module with ILI9341 2.8" colour TFT SPI 240x320
+//#define ESP32_Variant     7    // ESP32 Dev Module with ILI9341 2.8" colour TFT SPI 240x320
 
 
 //=============================================================================================
@@ -54,8 +54,8 @@ v2.19.8  2022-03-09 Merge Bohan's code for box compass alignment.
 //================================  T E L E M E T R Y   P R O T O C O L  ======================
 //=============================================================================================
 // Select only one telemetry PROTOCOL here
-//#define PROTOCOL 0     // AUTO detect protocol
-#define PROTOCOL 1     // Mavlink 1
+#define PROTOCOL 0     // AUTO detect protocol
+//#define PROTOCOL 1     // Mavlink 1
 //#define PROTOCOL 2     // Mavlink 2
 //#define PROTOCOL 3     // FrSky S.Port
 //#define PROTOCOL 4     // FrSky F.Port 1
@@ -68,9 +68,9 @@ v2.19.8  2022-03-09 Merge Bohan's code for box compass alignment.
 //==================================  H E A D I N G   S O U R C E  ============================
 //=============================================================================================
 // Select one heading source. We need this to relate the external world of co-ordinates to the internal tracker co_ordinates.
-//#define Heading_Source  1     // 1=Flight Computer GPS, 
+#define Heading_Source  1     // 1=Flight Computer GPS, 
 //#define Heading_Source  2     // 2=Flight Computer Compass
-#define Heading_Source  3     // 3=Trackerbox_Compass 
+//#define Heading_Source  3     // 3=Trackerbox_Compass 
 //#define Heading_Source  4     // 4=Trackerbox_GPS_And_Compass
 // Select GPS module serial link speed. Many GPS modules are capable of using multiple serial speed out from the box.
 // This information should be provided by the manufacturer.
@@ -372,13 +372,13 @@ uint16_t  UDP_remotePort = 14550;   // Mav sendPort,  (default 14550) remote hos
   //=========================================================================  
    
   #if (ESP32_Variant == 1)          // ESP32 Dev Module
-  uint8_t in_rxPin =        27;  // uart1
-  #define in_txPin          17 
+  uint8_t in_rxPin =        0;  // uart1
+  #define in_txPin          12 
   uint8_t gps_rxPin =       13;  // uart2 for tracker box GPS if applicable
-  #define gps_txPin          4  
-  bool rxInvert = true;          // ONLY FOR FrSky S.Port, NOT F.Port, NOT MAVLINK
-  #define SetHomePin        34   // LOW == pushed    
-  #define StatusLed         25   // Off=No good GPS yet, flashing=good GPS but home not set yet, solid = ready to track
+  #define gps_txPin          6  
+  bool rxInvert = false;          // ONLY FOR FrSky S.Port, NOT F.Port, NOT MAVLINK
+  #define SetHomePin        39   // LOW == pushed    
+  #define StatusLed         99   // Off=No good GPS yet, flashing=good GPS but home not set yet, solid = ready to track
   #define BuiltinLed        99
   #define azPWM_Pin         32   // azimuth servo (can't be 34,35,36,39 because input only !!)
   #define elPWM_Pin         33   // elevation servo(can't be 34,35,36,39 because input only !!)
@@ -390,13 +390,13 @@ uint16_t  UDP_remotePort = 14550;   // Mav sendPort,  (default 14550) remote hos
       /* Below please choose either Touch pin-pair or Digital pin-pair for display scrolling
        *  Pin == 99 means the pin-pair is not used
        */ 
-      #define Pup           99        // Board Button 1 to scroll the display up
-      #define Pdn           99        // Board Button 2 to scroll the display down   
-      #define Tup           33        // Touch pin to scroll the display up
-      #define Tdn           32        // Touch pin to scroll the display down   
+      #define Pup           36        // Board Button 1 to scroll the display up
+      #define Pdn           14        // Board Button 2 to scroll the display down   
+      #define Tup           99        // Touch pin to scroll the display up
+      #define Tdn           99        // Touch pin to scroll the display down   
           
-      #define SDA           21        // I2C OLED board and/or Compass
-      #define SCL           22        // I2C OLED board and/or Compass
+      #define SDA           5        // I2C OLED board and/or Compass
+      #define SCL           4        // I2C OLED board and/or Compass
       #define display_i2c_addr      0x3C       // I2C OLED board
     #endif   
     /*  

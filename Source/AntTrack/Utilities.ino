@@ -1536,7 +1536,7 @@ void WiFiEventHandler(WiFiEvent_t event)  {
     bool homeButtonPushed() {
       bool hbp = false;
       if (SetHomePin != 99) {
-        hbp = (!(digitalRead(SetHomePin)));            // Check if home button is pushed
+        hbp = ((digitalRead(SetHomePin)));            // Check if home button is pushed
       }
       #if (defined ESP32)
           hbp = !hbp;     // ESP32 pushed == HIGH (3.3V), else pushed == LOW)
