@@ -344,6 +344,16 @@
  float RadToDeg(float);
  uint32_t getBaud(uint8_t);
 
+//=================================================================================================   
+//                     For steppers
+//=================================================================================================
+
+#include <AccelStepper.h>
+
+// Define a stepper and the pins it will use
+AccelStepper stepper1(AccelStepper::DRIVER, 25, 26); // Defaults to AccelStepper::FULL4WIRE (4 pins) on 2, 3, 4, 5
+AccelStepper stepper2(AccelStepper::DRIVER, 15, 16); // Defaults to AccelStepper::FULL4WIRE (4 pins) on 2, 3, 4, 5
+
  
 //***************************************************
 void setup() {
@@ -590,6 +600,14 @@ void setup() {
   #endif
 
   // =============================== Setup SERVOS  ==================================
+    //steppers
+  stepper1.setMaxSpeed(5000);
+  stepper1.setAcceleration(20000);
+//  stepper1.moveTo(5000);
+
+  stepper2.setMaxSpeed(5000);
+  stepper2.setAcceleration(20000);
+//  stepper2.moveTo(5000);
   
   // NOTE: myservo.attach(pin, 1000, 2000);
   azServo.attach(azPWM_Pin, minAzPWM, maxAzPWM); 
@@ -853,13 +871,27 @@ void setup() {
      #endif // end frsBT
          
   #endif // ESP32
+
+
   
       
 }
 
 //===========================================================================================
 //===========================================================================================
-void loop() {            
+void loop() { 
+
+//    // If at the end of travel go to the other end
+//    if (stepper1.distanceToGo() == 0)
+//      stepper1.moveTo(-stepper1.currentPosition());
+//
+//    if (stepper2.distanceToGo() == 0)
+//      stepper2.moveTo(-stepper2.currentPosition());
+
+
+    stepper1.run();
+    stepper2.run();
+             
   
   #if (Telemetry_In == 1)         // Bluetooth
     Mavlink_Receive();
